@@ -16,6 +16,7 @@ A modern, responsive Hugo theme designed for news and media websites. Built with
 - 🔍 Search functionality with Fuse.js
 - ⚡ Fast loading with minimal JavaScript
 - 🎨 Clean typography and spacing
+- 📊 Google Analytics 4 integration
 
 ## Installation
 
@@ -30,6 +31,29 @@ theme = "hugo-news"
 ```
 
 ## Configuration
+
+### Google Analytics
+The theme includes built-in support for Google Analytics 4 (GA4). To enable tracking:
+
+1. Get your GA4 Measurement ID from your Google Analytics account (format: G-XXXXXXXXXX)
+2. Add it to your site's config file:
+
+```toml
+googleAnalytics = "G-XXXXXXXXXX"  # Replace with your GA4 measurement ID
+```
+
+The analytics code will:
+- Only load when a valid measurement ID is provided
+- Respect user privacy settings and cookie consent
+- Load asynchronously to not impact page performance
+- Track page views and basic user interactions
+
+If you don't want analytics, simply leave the googleAnalytics parameter commented out:
+```toml
+# googleAnalytics = "G-MEASUREMENT_ID"
+```
+
+### Basic Configuration
 
 Example `hugo.toml` configuration:
 
