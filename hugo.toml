@@ -1,0 +1,31 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-US'
+title = 'My Hugo news site'
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  author = "authors"
+
+[module]
+  [module.hugoVersion]
+    extended = false
+    min = "0.116.0"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[[menus.main]]
+name = "Home"
+url = "/"
+weight = 10
+
+[[menus.main]]
+name = "Categories"
+url = "/categories"
+weight = 20
+
+[[menus.main]]
+name = "Tags"
+url = "/tags"
+weight = 30
