@@ -2,7 +2,7 @@
 
 A modern, responsive Hugo theme designed for news and media websites. Built with Tailwind CSS and Alpine.js.
 
-![Hugo News Theme Screenshot](screenshot.png)
+![Hugo News Theme Screenshot](https://raw.githubusercontent.com/professionalaf/hugo-news/images/screenshot.png)
 
 ## Features
 

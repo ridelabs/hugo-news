@@ -8,8 +8,8 @@ features = ["search", "authors", "categories", "tags", "responsive", "tailwind",
 min_version = "0.116.0"
 
 [author]
-  name = "Professionalaf"
-  homepage = "https://professionalaf.com"
+  name = "Taylor Ondrey"
+  homepage = "https://taylorondrey.com"
 
 [module]
   [module.hugoVersion]
