@@ -30,15 +30,6 @@
         <!-- Comments section with data file and dynamic comments -->
         {{ $datePrefix := .Date.Format "2006-01-02" }}
         {{ $commentsFile := printf "%s-%s-comments" $datePrefix (lower .File.ContentBaseName) }}
-        <!-- Debug info -->
-        <div class="text-sm text-gray-500 mb-4">
-            <div>Debug: Looking for comments file: {{ $commentsFile }}</div>
-            <div>Debug: File path: {{ .File.Path }}</div>
-            <div>Debug: Content base name: {{ .File.ContentBaseName }}</div>
-            {{ with site.Data }}
-                <div>Debug: Available data files: {{ range $key, $value := . }}{{ $key }}, {{ end }}</div>
-            {{ end }}
-        </div>
         {{ $commentsData := index site.Data $commentsFile }}
 
         <div x-data="{ 
