@@ -136,9 +136,9 @@ The theme includes two types of comment systems:
 
 ### Static Comments
 
-Static comments are permanently stored in the site's data directory. They are visible to all users and persist across sessions. To add static comments:
+Static comments are stored alongside the article content in a `comments.json` file. They are visible to all users and persist across sessions. To add static comments:
 
-1. Create a JSON file in the `data` directory with the format: `YYYY-MM-DD-{article-directory-name}-comments.json`
+1. Create a `comments.json` file in your article's directory (next to your article's markdown file)
 2. Use this structure:
 ```json
 {
@@ -146,11 +146,21 @@ Static comments are permanently stored in the site's data directory. They are vi
     {
       "name": "Author Name",
       "content": "Comment text",
-      "date": "YYYY-MM-DDTHH:mm:ss-05:00",
+      "date": "2024-01-11T15:30:00Z",
       "isStatic": true
     }
   ]
 }
+```
+
+Example directory structure:
+```
+content/
+└── articles/
+    └── my-article/
+        ├── index.md
+        ├── featured-image.jpg
+        └── comments.json
 ```
 
 ### Dynamic Comments

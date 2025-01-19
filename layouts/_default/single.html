@@ -27,12 +27,25 @@
     <section id="comments" class="mt-12 border-t pt-8">
         <h2 class="text-2xl font-bold mb-6">Comments</h2>
 
-        <!-- Comments section with data file and dynamic comments -->
-        {{ $datePrefix := .Date.Format "2006-01-02" }}
-        {{ $commentsFile := printf "%s-%s-comments" $datePrefix (lower .File.ContentBaseName) }}
-        {{ $commentsData := index site.Data $commentsFile }}
+        <!-- Comments section with local file -->
+        {{ $commentsData := dict }}
 
-        <div x-data="{ 
+        {{ if .File.Dir }}
+            {{ $localComments := .Resources.GetMatch "comments.json" }}
+            {{ if $localComments }}
+                {{ $commentsData = transform.Unmarshal $localComments }}
+            {{ end }}
+
+            <!-- Debug info -->
+            <div class="debug-info" style="display: none;">
+                Directory: {{ .File.Dir }}
+                Resources: {{ .Resources }}
+                Local Comments Found: {{ if $localComments }}yes{{ else }}no{{ end }}
+                Comments Data: {{ $commentsData }}
+            </div>
+        {{ end }}
+
+        <div x-data="{
             comments: [],
             journalists: ['Luna Rainbow', 'Marcus Rodriguez', 'Diana Mitchell', 'James Harrison', 'Buck Patriot'],
             isJournalist(name) {
@@ -42,21 +55,21 @@
                 return '/authors/' + name.toLowerCase().replace(/\s+/g, '-');
             },
             initializeComments() {
-                // Get static comments from data file
+                // Get static comments from local file
                 const staticComments = {{ with $commentsData }}{{ .comments | jsonify }}{{ else }}[]{{ end }};
-                console.log('Static comments:', staticComments); // Debug log
-                
+                console.log('Static comments:', staticComments);
+
                 // Get dynamic comments from localStorage
                 const storedComments = JSON.parse(localStorage.getItem('comments-{{ .File.UniqueID }}') || '[]');
-                console.log('Stored comments:', storedComments); // Debug log
-                
+                console.log('Stored comments:', storedComments);
+
                 // Combine and sort all comments by date
-                this.comments = [...staticComments, ...storedComments].sort((a, b) => 
+                this.comments = [...staticComments, ...storedComments].sort((a, b) =>
                     new Date(a.date) - new Date(b.date)
                 );
-                console.log('Combined comments:', this.comments); // Debug log
+                console.log('Combined comments:', this.comments);
             }
-        }" 
+        }"
         x-init="initializeComments()"
         >
             <form @submit.prevent="
@@ -67,11 +80,11 @@
                     isStatic: false
                 };
                 comments.push(newComment);
-                localStorage.setItem('comments-{{ .File.UniqueID }}', 
+                localStorage.setItem('comments-{{ .File.UniqueID }}',
                     JSON.stringify(comments.filter(c => !c.isStatic))
                 );
                 $refs.name.value = '';
-                $refs.content.value = '';" 
+                $refs.content.value = '';"
                 class="mb-8">
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 mb-2">Name</label>
